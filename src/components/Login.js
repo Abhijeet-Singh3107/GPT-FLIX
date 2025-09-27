@@ -27,7 +27,7 @@ const Login = () => {
     const message = checkValidData(email.current.value, password.current.value);
     setErrorMessage(message);
     // console.log(message);
-    if (message) return; // stop the execution here only...
+    if (message) return;
 
     // now sign in sign up logic
     if (!isSignInForm) {
@@ -78,26 +78,28 @@ const Login = () => {
   return (
     <div>
       <Header />
-      <div className="absolute">
+      <div className="absolute inset-0"> 
         <img
-          src= {backgroundLOGO}
+          className="h-full w-full object-cover" 
+          src={backgroundLOGO}
           alt="netflix-background"
         />
+        <div className="absolute inset-0 bg-black/50"></div>
       </div>
       <form
         onSubmit={(e) => e.preventDefault()}
-        className="absolute w-3/12 bg-black p-12 my-36 mx-auto right-0 left-0 text-white bg-opacity-80"
+        className="absolute w-11/12 max-w-md p-8 sm:p-12 my-24 mx-auto right-0 left-0 text-white bg-black/80 rounded-md"
       >
-        <h1 className="font-bold text-2xl py-4">
+        <h1 className="font-bold text-3xl py-4">
           {isSignInForm ? "Sign In" : "Sign Up"}
         </h1>
 
         {!isSignInForm && (
           <input
             ref={name}
-            type="Name"
+            type="text" 
             placeholder="Full Name"
-            className="bg-[rgb(21,18,19)] w-full my-4 p-4"
+            className="bg-gray-700 w-full my-2 p-4 rounded"
           />
         )}
 
@@ -105,29 +107,37 @@ const Login = () => {
           ref={email}
           type="email"
           placeholder="Email or mobile Number"
-          className="bg-[rgb(21,18,19)] w-full my-4 p-4"
+          className="bg-gray-700 w-full my-2 p-4 rounded"
         />
 
         <input
           ref={password}
           type="password"
-          placeholder="password"
-          className="bg-[rgb(21,18,19)] w-full my-4 p-4"
+          placeholder="Password"
+          className="bg-gray-700 w-full my-2 p-4 rounded" 
         />
 
-        <p className="text-red-500 font-semibold text-lg py-2">
+        <p className="text-red-500 font-semibold text-base py-2">
           {errorMessage}
         </p>
 
-        <button className="w-full bg-red-700 my-6 p-2" onClick={handleClick}>
+        <button
+          className="w-full bg-red-600 my-6 p-3 rounded font-bold hover:bg-red-700 transition-colors"
+          onClick={handleClick}
+        >
           {isSignInForm ? "Sign In" : "Sign Up"}
         </button>
 
-        <button className="py-4" type="button" onClick={handleSignInForm}>
-          {isSignInForm
-            ? "New to Netflix? Sign Up Now"
-            : "Already registered? Sign In"}
-        </button>
+        <p className="text-gray-400">
+          {isSignInForm ? "New to Netflix? " : "Already registered? "}
+          <button
+            className="text-white hover:underline"
+            type="button"
+            onClick={handleSignInForm}
+          >
+            {isSignInForm ? "Sign Up Now" : "Sign In"}
+          </button>
+        </p>
       </form>
     </div>
   );
