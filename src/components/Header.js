@@ -4,12 +4,15 @@ import { auth } from "../utils/firebase";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser, removeUser } from "../utils/userSlice";
-import { LOGO } from "../utils/constants";
+import { LOGO, SUPPORTED_LANGUAGES } from "../utils/constants";
+import { toggleGptSearchView } from "../utils/gptSlice";
+import { changeLanguage } from "../utils/configSlice";
 
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((store) => store.user);
+  const showGptSearch = useSelector((store) => store.gpt.showGptSearch);
 
   const handleSignOut = () => {
     signOut(auth)
@@ -41,6 +44,16 @@ const Header = () => {
     return () => unsubscribe();
   }, []);
 
+  const handleGptSearchClick = () => {
+    // toggle GPT search
+    dispatch(toggleGptSearchView());
+  };
+
+  const handleLanguageChange = (e) => {
+    dispatch(changeLanguage(e.target.value));
+    console.log(e.target.value);
+  };
+
   return (
     <div className="absolute top-0 left-0 w-full z-20 flex justify-between items-center">
       {/* Gradient background */}
@@ -48,16 +61,30 @@ const Header = () => {
 
       {/* Logo */}
       <div className="relative px-8 py-2">
-        <img
-          className="w-44"
-          src= {LOGO}
-          alt="netflix-logo"
-        />
+        <img className="w-44" src={LOGO} alt="netflix-logo" />
       </div>
 
       {/* User + Sign Out */}
       {user && (
         <div className="relative flex items-center gap-4 px-8">
+          {showGptSearch && (
+            <select
+              className="p-2 m-2 bg-gray-500 text-white rounded-lg"
+              onChange={handleLanguageChange}
+            >
+              {SUPPORTED_LANGUAGES.map((lang) => (
+                <option key={lang.identifier} value={lang.identifier}>
+                  {lang.name}
+                </option>
+              ))}
+            </select>
+          )}
+          <button
+            className="px-4 py-2 text-white bg-orange-500 rounded-md hover:bg-orange-700 transition-colors"
+            onClick={handleGptSearchClick}
+          >
+            {showGptSearch ? "Homepage" : "GPT Search"}
+          </button>
           <img
             className="w-10 h-10 rounded-md border border-gray-400"
             src={user?.photoURL || "/userLogo.png"}
