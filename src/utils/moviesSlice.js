@@ -5,7 +5,9 @@ const moviesSlice = createSlice({
   initialState: {
     nowPlayingMovies: null,
     popularMovies: null,
+    topRatedMovies: null,
     trailerVideo: null,
+    topRatedShows: null,
   },
   reducers: {
     addNowPlayingMovies: (state, action) => {
@@ -16,10 +18,16 @@ const moviesSlice = createSlice({
     },
     addTrailerVideo: (state, action) => {
         state.trailerVideo = action.payload;
+    },
+    addTopRatedMovies: (state, action) => {
+      state.topRatedMovies = action.payload;
+    },
+    addTopRatedShows: (state, action) => {
+      state.topRatedShows = action.payload;
     }
   },
 });
 
-export const { addNowPlayingMovies , addPopularMovies , addTrailerVideo } = moviesSlice.actions;
+export const { addNowPlayingMovies , addPopularMovies , addTrailerVideo , addTopRatedMovies , addTopRatedShows } = moviesSlice.actions;
 
 export default moviesSlice.reducer;
