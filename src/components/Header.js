@@ -55,20 +55,21 @@ const Header = () => {
   };
 
   return (
-    <div className="absolute top-0 left-0 w-full px-4 py-3 bg-gradient-to-b from-black z-20 flex flex-col md:flex-row justify-between items-center overflow-x-hidden">
-      {/* Logo */}
-      <img
-        className="w-32 md:w-44 mx-auto md:mx-0"
-        src={LOGO}
-        alt="netflix-logo"
-      />
+    <div className="absolute top-0 left-0 w-full z-20 flex justify-between items-center">
+      {/* Gradient background */}
+      <div className="absolute inset-0 h-20 bg-gradient-to-b from-black/70 to-transparent"></div>
 
-      {/* User + Controls */}
+      {/* Logo */}
+      <div className="relative px-8 py-2">
+        <img className="w-44" src={LOGO} alt="netflix-logo" />
+      </div>
+
+      {/* User + Sign Out */}
       {user && (
-        <div className="flex flex-row items-center gap-2 md:gap-4 mt-2 md:mt-0">
+        <div className="relative flex items-center gap-4 px-8">
           {showGptSearch && (
             <select
-              className="px-3 py-2 h-10 bg-gray-700 text-white rounded-md text-sm md:text-base"
+              className="p-2 m-2 bg-gray-500 text-white rounded-lg"
               onChange={handleLanguageChange}
             >
               {SUPPORTED_LANGUAGES.map((lang) => (
@@ -78,23 +79,20 @@ const Header = () => {
               ))}
             </select>
           )}
-
           <button
-            className="px-4 py-2 h-10 bg-orange-500 text-white rounded-md hover:bg-orange-700 transition-colors text-sm md:text-base"
+            className="px-4 py-2 text-white bg-orange-500 rounded-md hover:bg-orange-700 transition-colors"
             onClick={handleGptSearchClick}
           >
             {showGptSearch ? "Homepage" : "GPT Search"}
           </button>
-
           <img
-            className="w-10 h-10 md:w-11 md:h-11 rounded-md border border-gray-400 object-cover"
+            className="w-10 h-10 rounded-md border border-gray-400"
             src={user?.photoURL || "/userLogo.png"}
             alt="userLogo"
           />
-
           <button
             onClick={handleSignOut}
-            className="px-3 py-2 h-10 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors text-sm md:text-base"
+            className="px-4 py-2 text-white bg-red-600 rounded-md hover:bg-red-700 transition-colors"
           >
             Sign Out
           </button>
