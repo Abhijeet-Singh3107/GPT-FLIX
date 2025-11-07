@@ -3,7 +3,7 @@ import lang from "../utils/languageConstants";
 import { useDispatch, useSelector } from "react-redux";
 import geminiAI from "../utils/gemini";
 import { API_OPTIONS } from "../utils/constants";
-import { addGptMovies } from "../utils/gptSlice";
+import { addGptMovies , setLoading } from "../utils/gptSlice";
 // import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const GptSearchBar = () => {
@@ -26,7 +26,10 @@ const GptSearchBar = () => {
     const model = geminiAI.getGenerativeModel({ model: "gemini-2.5-flash" });
     // Call generateContent
     const geminiQuery = "Act as a movie recommendation system and suggest me 5-7 movies on the tpoic : " + searchText.current.value + " movies should be comma seperated like the example given ahead. Example: Don,Sholay,Golmaal,Phir Hera Pheri,Dhamaal";
+
+    dispatch(setLoading(true));
     const geminiResults = await model.generateContent(geminiQuery);
+    dispatch(setLoading(false));
 
         // converting the movie result in array.
     const finalResult = geminiResults.response.text().split(",");

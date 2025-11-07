@@ -4,6 +4,7 @@ import MovieCard from "./MovieCard";
 const MovieList = ({ title, movies }) => {
   if (!movies || movies.length === 0) return null;
   console.log(movies);
+  
   return (
     <div className="px-4">
       <h1 className="text-3xl py-4">{title}</h1>
